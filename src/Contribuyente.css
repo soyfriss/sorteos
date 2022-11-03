@@ -1,0 +1,9 @@
+.contribuyente {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    background: lightblue;
+    border: 1px solid gray;
+    padding: 2px;
+    margin: 1px;  
+}

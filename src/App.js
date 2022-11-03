@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
 import './App.css';
+import UploadXlsx from './UploadXlsx';
+import Contribuyentes from './Contribuyentes';
 
 function App() {
+  const [contribuyentes, setContribuyentes] = useState([]);
+
+  const actualizarLista = (lista) => {
+    console.log('actualizarLista llamado');
+    console.log(lista.length);
+    setContribuyentes(lista);
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <UploadXlsx actualizarLista={actualizarLista}/>
+        <Contribuyentes contribuyentes={contribuyentes} />
+      </div>
   );
 }
 
