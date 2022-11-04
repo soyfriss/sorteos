@@ -2,14 +2,33 @@ import React, { useState } from "react";
 import './App.css';
 import UploadXlsx from './UploadXlsx';
 import Contribuyentes from './Contribuyentes';
+import BasicExample from "./NavbarTop";
 
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
 
-  const actualizarLista = (lista) => {
-    // console.log('actualizarLista llamado');
-    // console.log(lista.length);
-    setContribuyentes(lista);
+  const actualizarLista = (json) => {
+    console.log('actualizarLista llamado', json);
+    const nuevos = [...contribuyentes];
+
+    json.forEach(c => {
+
+      // Doble chance
+      const dobleChance = nuevos.find(contribuyente => c.Partida === contribuyente.partida);
+      if (dobleChance) {
+        dobleChance.chances++;
+      } else {
+        nuevos.push({
+          partida: c.Partida,
+          propietario: c.Propietario,
+          direccion: c.Dirección,
+          isWinner: false,
+          chances: 1
+        });
+      }
+    });
+
+    setContribuyentes(nuevos);
   }
 
   const sortear = () => {
@@ -24,16 +43,16 @@ function App() {
     // console.log(lista);
     shuffleArray(lista);
 
-    
+
 
     // Ganador 1
-    const partidaGanador1 = getWinner(lista);
+    const partidaGanador1 = getWinner(lista, []);
 
     // Ganador 2
-    const partidaGanador2 = getWinner(lista);
+    const partidaGanador2 = getWinner(lista, [partidaGanador1]);
 
     // Ganador 3
-    const partidaGanador3 = getWinner(lista);
+    const partidaGanador3 = getWinner(lista, [partidaGanador1, partidaGanador2]);
 
     const newContribuyentes = [...contribuyentes];
     setWinner(newContribuyentes, partidaGanador1);
@@ -50,15 +69,21 @@ function App() {
     winner.isWinner = true;
   }
 
-  const getWinner = (lista) => {
+  const getWinner = (lista, exceptuados) => {
     // console.log(lista);
     const totalContribuyentes = lista.length;
     const index = Math.floor(Math.random() * totalContribuyentes);
     // console.log(`index random: ${index}`);
     const partida = lista[index];
-    console.log(`partida: ${partida}`);
+    // console.log(`partida: ${partida}`);
 
-    return partida;
+    if (exceptuados.indexOf(partida) === -1) {
+      return partida;
+    } else {
+      console.log('Partida repetida', partida);
+      return getWinner(lista, exceptuados);
+    }
+
   }
 
   // The Fisher-Yates algorithm
@@ -72,10 +97,11 @@ function App() {
   }
 
   return (
-      <div className="App">
-        <UploadXlsx actualizarLista={actualizarLista} />
-        <Contribuyentes contribuyentes={contribuyentes} sortear={sortear} />
-      </div>
+    <div className="App">
+      <BasicExample />
+      <UploadXlsx actualizarLista={actualizarLista} />
+      <Contribuyentes contribuyentes={contribuyentes} sortear={sortear} />
+    </div>
   );
 }
 

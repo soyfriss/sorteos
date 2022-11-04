@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as xlsx from "xlsx";
 
 const UploadXlsx = (props) => {
 
-    const [contribuyentes, setContribuyentes] = useState([]);
     const [archivo, setArchivo] = useState('');
-
-    useEffect(() => {
-        console.log(contribuyentes);
-        props.actualizarLista(contribuyentes);
-    }, [contribuyentes]);
-
 
     const readUploadFile = (e) => {
         e.preventDefault();
+
+        // const nuevos = [...contribuyentes];
+
         if (e.target.files) {
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -22,38 +18,11 @@ const UploadXlsx = (props) => {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
                 const json = xlsx.utils.sheet_to_json(worksheet);
-
-                // console.log(typeof json);
-                // console.log(json);
-                // json.forEach(j => console.log(j))
-                const nuevos = [];
-
-                json.forEach(c => {
-
-                    // Doble chance
-                    const dobleChance = contribuyentes.find(contribuyente => c.Partida === contribuyente.partida);
-                    if (dobleChance) {
-                        dobleChance.chances++;
-                    } else {
-                        nuevos.push({
-                            partida: c.Partida,
-                            propietario: c.Propietario,
-                            direccion: c.Dirección,
-                            isWinner: false,
-                            chances: 1
-                        });
-                    }
-
-                    return nuevos;
-                });
-
-                setContribuyentes([
-                    ...contribuyentes,
-                    ...nuevos
-                ]);
+                props.actualizarLista(json);
             };
             reader.readAsArrayBuffer(e.target.files[0]);
 
+            
         }
         setArchivo('');
     };

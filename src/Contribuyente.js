@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import c from './Contribuyente.css'
+import './Contribuyente.css'
 
 const Contribuyente = (props) => {
     useEffect(() => {
