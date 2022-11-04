@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Contribuyente from "./Contribuyente";
+import "./Contribuyentes.css";
 
 const Contribuyentes = (props) => {
     const [conDobleChance, setConDobleChance] = useState(0);
@@ -28,10 +29,11 @@ const Contribuyentes = (props) => {
             <div>
                 <p>Contribuyentes: {props.contribuyentes.length}</p>
                 <p>Con doble chance: {conDobleChance}</p>
+                <button onClick={() => props.sortear()}>SORTEAR</button>
                 {conMasDeDosChances ? <p>Con más de dos chances: {conMasDeDosChances}</p> : ''}
             </div>
-            <div>
-                {props.contribuyentes && props.contribuyentes.map(c => <Contribuyente key={c.partida} partida={c.partida} propietario={c.propietario} direccion={c.direccion} chances={c.chances} />)}
+            <div className="lista-contribuyentes">
+                {props.contribuyentes && props.contribuyentes.map(c => <Contribuyente key={c.partida} partida={c.partida} propietario={c.propietario} direccion={c.direccion} isWinner={c.isWinner} chances={c.chances} />)}
             </div>
         </>
     );

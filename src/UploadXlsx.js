@@ -39,6 +39,7 @@ const UploadXlsx = (props) => {
                             partida: c.Partida,
                             propietario: c.Propietario,
                             direccion: c.Dirección,
+                            isWinner: false,
                             chances: 1
                         });
                     }

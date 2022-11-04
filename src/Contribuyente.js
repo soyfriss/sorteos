@@ -12,6 +12,7 @@ const Contribuyente = (props) => {
             <p>{props.propietario}</p>
             <p>{props.direccion}</p>
             <p>{props.chances}</p>
+            <p>{props.isWinner ? 'GANADOR' : 'NO'}</p>
         </div>
     );
 };
