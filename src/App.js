@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import './App.css';
+// import './App.css';
 import UploadXlsx from './UploadXlsx';
 import Contribuyentes from './Contribuyentes';
-import BasicExample from "./NavbarTop";
+import NavbarTop from "./NavbarTop";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
@@ -98,9 +101,15 @@ function App() {
 
   return (
     <div className="App">
-      <BasicExample />
-      <UploadXlsx actualizarLista={actualizarLista} />
-      <Contribuyentes contribuyentes={contribuyentes} sortear={sortear} />
+      <NavbarTop />
+      <Container>
+        <Row>
+          <Col><UploadXlsx actualizarLista={actualizarLista} /></Col>
+        </Row>
+        <Row>
+          <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} /></Col>
+        </Row>
+      </Container>
     </div>
   );
 }

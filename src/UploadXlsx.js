@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as xlsx from "xlsx";
+import Form from "react-bootstrap/Form";
 
 const UploadXlsx = (props) => {
 
@@ -22,22 +23,33 @@ const UploadXlsx = (props) => {
             };
             reader.readAsArrayBuffer(e.target.files[0]);
 
-            
+
         }
         setArchivo('');
     };
 
     return (
-        <form>
-            <label htmlFor="upload">Subir archivos</label>
+        <Form>
+            {/* <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group> */}
+            <Form.Group className="mb-3" controlId="uploadFile">
+                <Form.Label>Importar archivo XLSX</Form.Label>
+                <Form.Control type="file" name="uploadFile" onChange={readUploadFile} value={archivo}></Form.Control>
+            </Form.Group>
+            {/* <label htmlFor="upload">Subir archivos</label>
             <input
                 type="file"
                 name="upload"
                 id="upload"
                 onChange={readUploadFile}
                 value={archivo}
-            />
-        </form>
+            /> */}
+        </Form>
     );
 }
 

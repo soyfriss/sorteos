@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Contribuyente from "./Contribuyente";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
 const Contribuyentes = (props) => {
-    const [conDobleChance, setConDobleChance] = useState(0);
-    const [conMasDeDosChances, setConMasDeDosChances] = useState(0);
 
     const getTotalContribuyentesConChance = (chanches) => {
-        return props.contribuyentes.filter(c => c.chances === chanches).length;
-    }
+        if (props.contribuyentes) return props.contribuyentes.filter(c => c.chances === chanches).length;
+        return 0;
+    }; 
 
     const getTotalContribuyentesConMasDeDosChances = () => {
-        return props.contribuyentes.filter(c => c.chances > 2).length;
-    }
-
-    useEffect(() => {
-        setConDobleChance(getTotalContribuyentesConChance(2));
-        setConMasDeDosChances(getTotalContribuyentesConMasDeDosChances());
-    }, []);
+        if (props.contribuyentes) return props.contribuyentes.filter(c => c.chances > 2).length;
+        return 0;
+    };
 
     let button = '';
     if(props.contribuyentes.length) {
@@ -27,9 +23,9 @@ const Contribuyentes = (props) => {
     return (
         <>
             <div>
-                <p>Contribuyentes: {props.contribuyentes.length}</p>
-                <p>Con doble chance: {conDobleChance}</p>
-                {conMasDeDosChances ? <p>Con más de dos chances: {() => conMasDeDosChances}</p> : ''}
+                <Alert variant={props.contribuyentes.length ? 'success' : 'danger'}>Contribuyentes: {props.contribuyentes.length}</Alert>
+                <Alert variant="secondary">Con doble chance: {getTotalContribuyentesConChance(2)}</Alert>
+                <Alert variant="secondary">Con más de dos chances: {getTotalContribuyentesConMasDeDosChances()}</Alert>
                 {button}
             </div>
             <div className="lista-contribuyentes">
