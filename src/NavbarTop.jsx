@@ -12,13 +12,13 @@ function NavbarTop() {
             <img
               alt=""
               src={logo}
-              width="30"
-              height="30"
+              width="50"
+              height="50"
               className="d-inline-block align-top"
             />
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Navbar.Text>Sorteos</Navbar.Text>
+            <Navbar.Text><h2>Sorteos</h2></Navbar.Text>
           </Nav>
         </Container>
       </Navbar>
