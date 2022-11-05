@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import * as xlsx from "xlsx";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+import { ListGroup } from "react-bootstrap";
 
 const UploadXlsx = (props) => {
 
     const [archivo, setArchivo] = useState('');
+    const [archivos, setArchivos] = useState([]);
 
     const readUploadFile = (e) => {
         e.preventDefault();
-
-        // const nuevos = [...contribuyentes];
 
         if (e.target.files) {
             const reader = new FileReader();
@@ -19,37 +20,40 @@ const UploadXlsx = (props) => {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
                 const json = xlsx.utils.sheet_to_json(worksheet);
+
                 props.actualizarLista(json);
             };
+            setArchivos([...archivos, " " + e.target.files[0].name + " 🆗"]);
             reader.readAsArrayBuffer(e.target.files[0]);
-
-
         }
         setArchivo('');
     };
 
+    const mostrarArchivosImportados = () => {
+        if (archivos.length) {
+            // console.log(archivos.toString());
+            return archivos.toString();
+        }
+        return 'No has importado archivos aún!';
+    }
+
     return (
-        <Form>
-            {/* <Form.Group className="mb-3" controlId="formBasicEmail">
+        <>
+            <Form>
+                {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" />
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                 </Form.Text>
             </Form.Group> */}
-            <Form.Group className="mb-3" controlId="uploadFile">
-                <Form.Label>Importar archivo XLSX</Form.Label>
-                <Form.Control type="file" name="uploadFile" onChange={readUploadFile} value={archivo}></Form.Control>
-            </Form.Group>
-            {/* <label htmlFor="upload">Subir archivos</label>
-            <input
-                type="file"
-                name="upload"
-                id="upload"
-                onChange={readUploadFile}
-                value={archivo}
-            /> */}
-        </Form>
+                <Form.Group className="mb-3" controlId="uploadFile">
+                    <Form.Label>Importar archivo de Excel</Form.Label>
+                    <Form.Control type="file" name="uploadFile" onChange={readUploadFile} value={archivo}></Form.Control>
+                </Form.Group>
+            </Form>
+            {<Alert variant={archivos.length ? 'light' : 'danger'}>{mostrarArchivosImportados()}</Alert>}
+        </>
     );
 }
 
