@@ -6,6 +6,7 @@ import NavbarTop from "./NavbarTop";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Winners from "./Winners";
 
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
@@ -99,14 +100,29 @@ function App() {
     }
   }
 
+  const winners = contribuyentes.filter(c => c.isWinner);
+
+  if (winners.length) {
+    return (
+      <div className="App">
+        <NavbarTop />
+        <Container>
+          <Row className="mt-3">
+            <Col><Winners winners={winners} /></Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <NavbarTop />
       <Container>
-        <Row>
+        <Row className="mt-3">
           <Col><UploadXlsx actualizarLista={actualizarLista} /></Col>
         </Row>
-        <Row>
+        <Row className="mt-1">
           <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} /></Col>
         </Row>
       </Container>
