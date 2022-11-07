@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as xlsx from "xlsx";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { ListGroup } from "react-bootstrap";
 
 const UploadXlsx = (props) => {
 
@@ -40,7 +39,7 @@ const UploadXlsx = (props) => {
             // console.log(archivos.toString());
             return archivos.toString();
         }
-        return 'No has importado archivos aún!';
+        return 'Aún no has importado archivos!';
     }
 
     return (

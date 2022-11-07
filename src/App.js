@@ -49,7 +49,6 @@ function App() {
     shuffleArray(lista);
 
 
-
     // Ganador 1
     const partidaGanador1 = getWinner(lista, []);
 

@@ -1,9 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
-import AccordionItem from "react-bootstrap/esm/AccordionItem";
 
 const Contribuyentes = (props) => {
 
@@ -32,7 +30,7 @@ const Contribuyentes = (props) => {
         button = <Button size="lg" className="mt-3 mx-3" onClick={() => props.sortear()}>Sortear</Button>;
     }
 
-    let resetButton = <Button size="lg" className="mt-3" onClick={() => props.reset()}>Reiniciar</Button>;
+    let resetButton = <Button size="lg" className="mt-3" onClick={() => window.location.reload()}>Reiniciar</Button>;
 
     if (props.contribuyentes.length) {
         return (
