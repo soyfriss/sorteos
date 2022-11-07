@@ -4,9 +4,8 @@ import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
 import RaffleYesNo from "./RaffleYesNo";
-// import { Alert } from "bootstrap";
 import Overlay from 'react-bootstrap/Overlay';
-// import Spinner from 'react-bootstrap/Spinner';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Contribuyentes = (props) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -88,6 +87,7 @@ const Contribuyentes = (props) => {
                 <td>{c.partida}</td>
                 <td>{c.propietario}</td>
                 <td>{c.direccion}</td>
+                <td className="text-center"><Badge bg="secondary">{c.chances}</Badge></td>
             </tr>
         });
 
@@ -99,6 +99,7 @@ const Contribuyentes = (props) => {
                         <th>Partida</th>
                         <th>Propietario</th>
                         <th>Dirección</th>
+                        <th>Chances</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,38 +143,36 @@ const Contribuyentes = (props) => {
 
         setTimeout(() => props.sortear(), 3000);
 
-        
+
     }
 
     const winners = props.contribuyentes.filter(c => c.isWinner);
 
-    let button = '';
+
+
+    let raffleButton = '';
     if (props.name && props.contribuyentes.length && !winners.length) {
-        button =
-            <>
-                <Button size="lg" className="mt-3 mx-3"  ref={target} onClick={() => confirmarSorteo()}>Sortear</Button>
-                <Overlay target={target.current} show={procesando} placement="right">
-                    {({ placement, arrowProps, show: _show, popper, ...props }) => (
-                        <div
-                            {...props}
-                            style={{
-                                position: 'absolute',
-                                backgroundColor: 'rgba(255, 100, 100, 0.85)',
-                                padding: '2px 10px',
-                                color: 'white',
-                                borderRadius: 3,
-                                ...props.style,
-                            }}
-                        >
-                            Procesando...
-                        </div>
-                    )}
-                </Overlay>
-                <RaffleYesNo name={props.name} show={showConfirmation} closeDialog={() => setShowConfirmation(false)} sortear={procesarSorteo} />
-            </>
+        raffleButton = <>
+            <Button size="lg" className="mt-3 mx-3" ref={target} onClick={() => confirmarSorteo()}>{
+                procesando
+                    ?
+                    <>
+                        <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true" />
+                        <span> Procesando...</span>
+                    </>
+                    :
+                    'Sortear'
+            }</Button>
+            <RaffleYesNo name={props.name} show={showConfirmation} closeDialog={() => setShowConfirmation(false)} sortear={procesarSorteo} />
+        </>
     }
 
-    let resetButton = <Button size="lg" className="mt-3" onClick={() => window.location.reload()}>Reiniciar</Button>;
+    let resetButton = procesando ? '' : <Button size="lg" className="mt-3" onClick={() => window.location.reload()}>Reiniciar</Button>;
 
     if (props.contribuyentes.length) {
         return (
@@ -203,7 +202,7 @@ const Contribuyentes = (props) => {
                         <Alert variant="secondary">Con más de dos chances: {getTotalContribuyentesConMasDeDosChances()}</Alert>
                     </h5> */}
                     {resetButton}
-                    {button}
+                    {raffleButton}
                 </div>
 
                 {/* <div className="lista-contribuyentes">
