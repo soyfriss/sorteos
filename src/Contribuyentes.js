@@ -88,7 +88,6 @@ const Contribuyentes = (props) => {
                 <td>{c.partida}</td>
                 <td>{c.propietario}</td>
                 <td>{c.direccion}</td>
-                <td className="text-center"><Badge bg="secondary">{props.contribuyentes[index].chances}</Badge></td>
             </tr>
         });
 
@@ -100,7 +99,6 @@ const Contribuyentes = (props) => {
                         <th>Partida</th>
                         <th>Propietario</th>
                         <th>Dirección</th>
-                        <th>Chances</th>
                     </tr>
                 </thead>
                 <tbody>
