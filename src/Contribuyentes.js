@@ -1,12 +1,17 @@
-import React, {useState} from "react";
+import React, { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
 import RaffleYesNo from "./RaffleYesNo";
+import { Alert } from "bootstrap";
+import Overlay from 'react-bootstrap/Overlay';
+// import Spinner from 'react-bootstrap/Spinner';
 
 const Contribuyentes = (props) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [procesando, setProcesando] = useState(false);
+    const target = useRef(null);
 
 
     const getListaContribuyentes = () => {
@@ -132,6 +137,12 @@ const Contribuyentes = (props) => {
 
     const procesarSorteo = () => {
         console.log('procesarSorteo()');
+        setShowConfirmation(false);
+        setProcesando(true);
+
+        setTimeout(() => props.sortear(), 3000);
+
+        
     }
 
     const winners = props.contribuyentes.filter(c => c.isWinner);
@@ -140,8 +151,25 @@ const Contribuyentes = (props) => {
     if (props.name && props.contribuyentes.length && !winners.length) {
         button =
             <>
-                <Button size="lg" className="mt-3 mx-3" onClick={() => confirmarSorteo()}>Sortear</Button>
-                <RaffleYesNo name={props.name} show={showConfirmation} closeDialog={() => setShowConfirmation(false)} sortear={props.sortear} />
+                <Button size="lg" className="mt-3 mx-3"  ref={target} onClick={() => confirmarSorteo()}>Sortear</Button>
+                <Overlay target={target.current} show={procesando} placement="right">
+                    {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                        <div
+                            {...props}
+                            style={{
+                                position: 'absolute',
+                                backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                                padding: '2px 10px',
+                                color: 'white',
+                                borderRadius: 3,
+                                ...props.style,
+                            }}
+                        >
+                            Procesando...
+                        </div>
+                    )}
+                </Overlay>
+                <RaffleYesNo name={props.name} show={showConfirmation} closeDialog={() => setShowConfirmation(false)} sortear={procesarSorteo} />
             </>
     }
 
