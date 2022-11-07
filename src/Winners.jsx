@@ -20,9 +20,12 @@ const Winners = (props) => {
 
         return (
             <>
-                <Alert variant="success" className="text-center"><h2>
-                    🎊 Felicitaciones a los ganadores del sorteo 🎊
-                </h2></Alert>
+                <Alert variant="success" className="text-center">
+                    <h2>
+                        🎊 Felicitaciones a los ganadores del sorteo 🎊
+                    </h2>
+                    <h2>{props.name}</h2>
+                </Alert>
                 <Table striped bordered>
                     <thead>
                         <tr>

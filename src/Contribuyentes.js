@@ -26,7 +26,7 @@ const Contribuyentes = (props) => {
     const winners = props.contribuyentes.filter(c => c.isWinner);
     
     let button = '';
-    if (props.contribuyentes.length && !winners.length) {
+    if (props.name && props.contribuyentes.length && !winners.length) {
         button = <Button size="lg" onClick={() => props.sortear()}>Sortear</Button>;
     }
 

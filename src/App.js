@@ -10,6 +10,7 @@ import Winners from "./Winners";
 
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
+  const [name, setName] = useState('');
 
   const actualizarLista = (json) => {
     console.log('actualizarLista llamado', json);
@@ -108,7 +109,7 @@ function App() {
         <NavbarTop />
         <Container>
           <Row className="mt-3">
-            <Col><Winners winners={winners} /></Col>
+            <Col><Winners winners={winners} name={name} /></Col>
           </Row>
         </Container>
       </div>
@@ -120,10 +121,10 @@ function App() {
       <NavbarTop />
       <Container>
         <Row className="mt-3">
-          <Col><UploadXlsx actualizarLista={actualizarLista} /></Col>
+          <Col><UploadXlsx actualizarLista={actualizarLista} name={name} setName={(name) => setName(name)} /></Col>
         </Row>
         <Row className="mt-1">
-          <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} /></Col>
+          <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} name={name} /></Col>
         </Row>
       </Container>
     </div>
