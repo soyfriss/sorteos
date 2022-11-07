@@ -4,7 +4,7 @@ import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
 import RaffleYesNo from "./RaffleYesNo";
-import Overlay from 'react-bootstrap/Overlay';
+// import Overlay from 'react-bootstrap/Overlay';
 import Spinner from 'react-bootstrap/Spinner';
 
 const Contribuyentes = (props) => {
