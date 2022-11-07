@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
+import RaffleYesNo from "./RaffleYesNo";
 
 const Contribuyentes = (props) => {
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
 
     const getListaContribuyentes = () => {
 
@@ -122,11 +125,24 @@ const Contribuyentes = (props) => {
         return <Badge bg={totalContribuyentes ? 'primary' : 'secondary'}>{totalContribuyentes}</Badge>;
     };
 
+    const confirmarSorteo = () => {
+        console.log('confirmarSorteo() llamado');
+        setShowConfirmation(true);
+    }
+
+    const procesarSorteo = () => {
+        console.log('procesarSorteo()');
+    }
+
     const winners = props.contribuyentes.filter(c => c.isWinner);
 
     let button = '';
     if (props.name && props.contribuyentes.length && !winners.length) {
-        button = <Button size="lg" className="mt-3 mx-3" onClick={() => props.sortear()}>Sortear</Button>;
+        button =
+            <>
+                <Button size="lg" className="mt-3 mx-3" onClick={() => confirmarSorteo()}>Sortear</Button>
+                <RaffleYesNo name={props.name} show={showConfirmation} closeDialog={() => setShowConfirmation(false)} sortear={props.sortear} />
+            </>
     }
 
     let resetButton = <Button size="lg" className="mt-3" onClick={() => window.location.reload()}>Reiniciar</Button>;
