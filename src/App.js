@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import './App.css';
 import UploadXlsx from './UploadXlsx';
 import Contribuyentes from './Contribuyentes';
-import NavbarTop from "./NavbarTop";
+import Menu from "./Menu";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Winners from "./Winners";
+import Winners from './Winners';
 
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
@@ -105,7 +105,7 @@ function App() {
   if (winners.length) {
     return (
       <div className="App">
-        <NavbarTop />
+        <Menu />
         <Container>
           <Row className="mt-3">
             <Col><Winners winners={winners} name={name} /></Col>
@@ -117,7 +117,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavbarTop />
+      <Menu />
       <Container>
         <Row className="mt-3">
           <Col><UploadXlsx actualizarLista={actualizarLista} name={name} setName={(name) => setName(name)} /></Col>
