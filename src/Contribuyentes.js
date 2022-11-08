@@ -4,19 +4,53 @@ import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
 import RaffleYesNo from "./RaffleYesNo";
-// import Overlay from 'react-bootstrap/Overlay';
 import Spinner from 'react-bootstrap/Spinner';
+import Pagination from 'react-bootstrap/Pagination';
+import pagination from "./simple-pagination";
 
 const Contribuyentes = (props) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [procesando, setProcesando] = useState(false);
     const target = useRef(null);
+    const itemsPage = 20;
+    const [activePage, setActivePage] = useState(1);
 
+    const onActivePageChange = (page) => {
+        console.log('onActivePageChange()');
+        setActivePage(page)
+    }
 
-    const getListaContribuyentes = () => {
+    const getListaContribuyentes = (page) => {
+        console.log('getListaContribuyentes()');
+        // Pagination
+        const countContribuyentes = props.contribuyentes.length;
 
+        let paginationBasic = '';
+        if (countContribuyentes > itemsPage) {
+            let totalPages = Math.ceil(props.contribuyentes.length / itemsPage)
+            let pages = pagination(activePage, totalPages);
+            let items = pages.map((p, i) => {
+                return (
+                    <Pagination.Item key={i} active={p === page} onClick={e => onActivePageChange(parseInt(e.target.text))}>
+                        {p}
+                    </Pagination.Item>
+                );
+            })
+
+            paginationBasic = (
+                <div>
+                    <Pagination>{items}</Pagination>
+                </div>
+            );
+        }
+
+        // (page * itemsPage) - itemsPage ___ (page * itemsPage) - 1 o totalContribuyentes
+        // 0 - 19, 20 - 39, 40 - 59...
         const rows = [];
-        for (let i = 0; i < props.contribuyentes.length; i++) {
+        const start = (page * itemsPage) - itemsPage;
+        let end = (page * itemsPage);
+        if (end > props.contribuyentes.length) end = props.contribuyentes.length;
+        for (let i = start; i < end; i++) {
             rows.push(
                 <tr key={i}>
                     <td>{i + 1}</td>
@@ -28,21 +62,24 @@ const Contribuyentes = (props) => {
             );
         }
 
-        return (<Table striped bordered>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Partida</th>
-                    <th>Propietario</th>
-                    <th>Dirección</th>
-                    <th>Chances</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </Table>);
-
+        return (
+            <>
+                <Table striped bordered>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Partida</th>
+                            <th>Propietario</th>
+                            <th>Dirección</th>
+                            <th>Chances</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </Table>
+                {paginationBasic}
+            </>);
     };
 
     const getListaContribuyentesConDobleChance = () => {
@@ -180,8 +217,8 @@ const Contribuyentes = (props) => {
                 <div>
                     <Accordion alwaysOpen>
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header><h5>Contribuyentes: {getTotalContribuyentes()}</h5></Accordion.Header>
-                            <Accordion.Body>{getListaContribuyentes()}</Accordion.Body>
+                            <Accordion.Header><h5>Contribuyentes: {getTotalContribuyentes(activePage)}</h5></Accordion.Header>
+                            <Accordion.Body>{getListaContribuyentes(activePage)}</Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
                             <Accordion.Header><h5>Con doble chance: {getTotalContribuyentesConChance(2)}</h5></Accordion.Header>
