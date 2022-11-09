@@ -77,7 +77,7 @@ const Contribuyentes = (props) => {
 
 
     let raffleButton = '';
-    if (props.name && props.contribuyentes.length && props.numberOfWinners > 0 && !winners.length) {
+    if (props.name && props.contribuyentes.length && props.numberOfWinners > 0 && props.numberOfWinners <= props.contribuyentes.length && !winners.length) {
         console.log(props.numberOfWinners);
         raffleButton = <>
             <Button size="lg" className="mt-3 mx-3" ref={target} onClick={() => confirmarSorteo()}>{
