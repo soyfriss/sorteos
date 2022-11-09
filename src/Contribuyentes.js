@@ -10,8 +10,8 @@ const Contribuyentes = (props) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [procesando, setProcesando] = useState(false);
     const target = useRef(null);
-    const itemsPage = 2;
-    const [activePage, setActivePage] = useState(1);
+    // const itemsPage = 2;
+    // const [activePage, setActivePage] = useState(1);
 
     const getListaContribuyentesConDobleChance = () => {
 
@@ -106,7 +106,7 @@ const Contribuyentes = (props) => {
                 <div>
                     <Accordion alwaysOpen>
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header><h5>Contribuyentes: {getTotalContribuyentes(activePage)}</h5></Accordion.Header>
+                            <Accordion.Header><h5>Contribuyentes: {getTotalContribuyentes()}</h5></Accordion.Header>
                             <Accordion.Body><TaxPayersTable contribuyentes={props.contribuyentes} /></Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">

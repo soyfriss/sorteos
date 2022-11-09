@@ -34,6 +34,12 @@ const UploadXlsx = (props) => {
         props.setName(e.target.value);
     }
 
+    const onChangenumberOfWinners = (e) => {
+        e.preventDefault();
+
+        props.setNumberOfWinners(e.target.value);
+    }
+
     const mostrarArchivosImportados = () => {
         if (archivos.length) {
             // console.log(archivos.toString());
@@ -49,13 +55,10 @@ const UploadXlsx = (props) => {
                     <Form.Label>Nombre del sorteo</Form.Label>
                     <Form.Control type="text" name="name" onChange={onChangeName} value={props.name} />
                 </Form.Group>
-                {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group> */}
+                <Form.Group className="mb-3" controlId="numberOfWinners">
+                    <Form.Label>Número de ganadores</Form.Label>
+                    <Form.Control type="number" name="numberOfWinners" onChange={onChangenumberOfWinners} value={props.numberOfWinners} />
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="uploadFile">
                     <Form.Label>Importar archivo de Excel</Form.Label>
                     <Form.Control type="file" name="uploadFile" onChange={readUploadFile} value={archivo}></Form.Control>

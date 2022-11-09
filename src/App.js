@@ -11,6 +11,7 @@ import Winners from './Winners';
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
   const [name, setName] = useState('');
+  const [numberOfWinners, setNumberOfWinners] = useState(3);
 
   const actualizarLista = (json) => {
     console.log('actualizarLista llamado', json);
@@ -49,19 +50,13 @@ function App() {
     shuffleArray(lista);
 
 
-    // Ganador 1
-    const partidaGanador1 = getWinner(lista, []);
-
-    // Ganador 2
-    const partidaGanador2 = getWinner(lista, [partidaGanador1]);
-
-    // Ganador 3
-    const partidaGanador3 = getWinner(lista, [partidaGanador1, partidaGanador2]);
+    const winnersList = [];
+    for (let i = 0; i < numberOfWinners; i++) {
+      winnersList.push(getWinner(lista, winnersList));        
+    }
 
     const newContribuyentes = [...contribuyentes];
-    setWinner(newContribuyentes, partidaGanador1);
-    setWinner(newContribuyentes, partidaGanador2);
-    setWinner(newContribuyentes, partidaGanador3);
+    winnersList.forEach(partida => setWinner(newContribuyentes, partida))
 
     setContribuyentes(newContribuyentes);
 
@@ -120,7 +115,7 @@ function App() {
       <Menu />
       <Container>
         <Row className="mt-3">
-          <Col><UploadXlsx actualizarLista={actualizarLista} name={name} setName={(name) => setName(name)} /></Col>
+          <Col><UploadXlsx actualizarLista={actualizarLista} name={name} setName={(name) => setName(name)} numberOfWinners={numberOfWinners} setNumberOfWinners={(value) => setNumberOfWinners(value)} /></Col>
         </Row>
         <Row className="mt-1">
           <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} name={name} /></Col>
