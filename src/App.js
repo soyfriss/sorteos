@@ -101,8 +101,8 @@ function App() {
 
     const winners = [];
     winnersList.forEach(partida => winners.push(contribuyentes.find(c => c.partida === partida)));
-    console.log(winnersList);
-    console.log(winners);
+    // console.log(winnersList);
+    // console.log(winners);
 
     return (
       <div className="App">
