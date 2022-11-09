@@ -10,6 +10,7 @@ import Winners from './Winners';
 
 function App() {
   const [contribuyentes, setContribuyentes] = useState([]);
+  const [winnersList, setWinnersList] = useState([]);
   const [name, setName] = useState('');
   const [numberOfWinners, setNumberOfWinners] = useState(3);
 
@@ -59,6 +60,7 @@ function App() {
     winnersList.forEach(partida => setWinner(newContribuyentes, partida))
 
     setContribuyentes(newContribuyentes);
+    setWinnersList(winnersList);
 
   }
 
@@ -95,9 +97,13 @@ function App() {
     }
   }
 
-  const winners = contribuyentes.filter(c => c.isWinner);
+  if (winnersList.length) {
 
-  if (winners.length) {
+    const winners = [];
+    winnersList.forEach(partida => winners.push(contribuyentes.find(c => c.partida === partida)));
+    console.log(winnersList);
+    console.log(winners);
+
     return (
       <div className="App">
         <Menu />
