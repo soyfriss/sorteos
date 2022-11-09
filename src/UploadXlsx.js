@@ -34,7 +34,8 @@ const UploadXlsx = (props) => {
         props.setName(e.target.value);
     }
 
-    const onChangenumberOfWinners = (e) => {
+    const onChangeNumberOfWinners = (e) => {
+        // console.log('onChangeNumberOfWinners()');
         e.preventDefault();
 
         props.setNumberOfWinners(e.target.value);
@@ -57,7 +58,7 @@ const UploadXlsx = (props) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="numberOfWinners">
                     <Form.Label>Número de ganadores</Form.Label>
-                    <Form.Control type="number" name="numberOfWinners" onChange={onChangenumberOfWinners} value={props.numberOfWinners} />
+                    <Form.Control type="number" name="numberOfWinners" onChange={onChangeNumberOfWinners} value={props.numberOfWinners} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="uploadFile">
                     <Form.Label>Importar archivo de Excel</Form.Label>

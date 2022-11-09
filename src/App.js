@@ -118,7 +118,7 @@ function App() {
           <Col><UploadXlsx actualizarLista={actualizarLista} name={name} setName={(name) => setName(name)} numberOfWinners={numberOfWinners} setNumberOfWinners={(value) => setNumberOfWinners(value)} /></Col>
         </Row>
         <Row className="mt-1">
-          <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} name={name} /></Col>
+          <Col><Contribuyentes contribuyentes={contribuyentes} sortear={sortear} name={name} numberOfWinners={numberOfWinners} /></Col>
         </Row>
       </Container>
     </div>
