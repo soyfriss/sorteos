@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import * as xlsx from "xlsx";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import { connect } from "react-redux";
+import { addEntrants, setRaffleName, setRaffleNumberOfWinners } from "./redux/actions";
 
 const UploadXlsx = (props) => {
 
@@ -20,7 +22,8 @@ const UploadXlsx = (props) => {
                 const worksheet = workbook.Sheets[sheetName];
                 const json = xlsx.utils.sheet_to_json(worksheet);
 
-                props.actualizarLista(json);
+                // props.actualizarLista(json);
+                props.addEntrants(json);
             };
             setArchivos([...archivos, " " + e.target.files[0].name + " 🆗"]);
             reader.readAsArrayBuffer(e.target.files[0]);
@@ -31,14 +34,14 @@ const UploadXlsx = (props) => {
     const onChangeName = (e) => {
         e.preventDefault();
 
-        props.setName(e.target.value);
+        props.setRaffleName(e.target.value);
     }
 
     const onChangeNumberOfWinners = (e) => {
         // console.log('onChangeNumberOfWinners()');
         e.preventDefault();
 
-        props.setNumberOfWinners(e.target.value);
+        props.setRaffleNumberOfWinners(e.target.value);
     }
 
     const mostrarArchivosImportados = () => {
@@ -54,7 +57,7 @@ const UploadXlsx = (props) => {
             <Form>
                 <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Nombre del sorteo</Form.Label>
-                    <Form.Control type="text" name="name" onChange={onChangeName} value={props.name} />
+                    <Form.Control type="text" name="name" onChange={onChangeName} value={props.raffleName} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="numberOfWinners">
                     <Form.Label>Número de ganadores</Form.Label>
@@ -70,4 +73,19 @@ const UploadXlsx = (props) => {
     );
 }
 
-export default UploadXlsx;
+const mapStateToProps = (state) => {
+    return {
+        raffleName: state.name,
+        numberOfWinners: state.numberOfWinners
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setRaffleName: raffleName => dispatch(setRaffleName(raffleName)),
+        setRaffleNumberOfWinners: value => dispatch(setRaffleNumberOfWinners(value)),
+        addEntrants: json => dispatch(addEntrants(json))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadXlsx);

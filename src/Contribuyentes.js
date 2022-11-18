@@ -5,6 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import RaffleYesNo from "./RaffleYesNo";
 import Spinner from 'react-bootstrap/Spinner';
 import TaxPayersTable from "./TaxPayersTable";
+import { connect } from "react-redux";
 
 const Contribuyentes = (props) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -142,4 +143,10 @@ const Contribuyentes = (props) => {
     return <></>;
 }
 
-export default Contribuyentes;
+const mapStateToProps = (state) => {
+    return {
+        entrants: state.entrants
+    }
+}
+
+export default connect(mapStateToProps)(Contribuyentes);
